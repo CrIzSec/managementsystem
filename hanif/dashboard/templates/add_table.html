@@ -1,0 +1,28 @@
+<div class="flex w-full h-full justify-center mt-12">
+    <div class="bg-blue-300 flex flex-col justify-between w-[50vh] h-[60vh] rounded-xl">
+        <div>
+            <div class="p-5 flex justify-center"><h1 class="text-gray-800 font-bold text-4xl">Add Items</h1></div>
+            <div>
+                <form method="POST" action="{% url 'add_tablelist' %}">
+                    {% csrf_token %}
+                    <div class="px-[6vh]">
+                        <h1 class="mb-2 text-gray-800 font-semibold text-2xl">Product Name</h1>
+                        {{ form.item_name }}
+                        <h1 class="mb-2 text-gray-800 font-semibold text-2xl">Price</h1>
+                        {{ form.price }}
+                        <h1 class="mb-2 text-gray-800 font-semibold text-2xl">Stock</h1>
+                        {{ form.stock }}
+                    </div>
+                    <div class="px-[6vh] flex justify-end mt-2">
+                        <button type="submit" class="flex justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[12vh] h-[4vh] rounded-lg">Add Items</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            <div class="flex justify-center mb-[2vh]">
+                <h1 class="font-bold text-gray-800">Copyright &copy; 2024 NetCat_ | All rights reserved</h1>
+            </div>
+        </div>
+    </div>
+</div>

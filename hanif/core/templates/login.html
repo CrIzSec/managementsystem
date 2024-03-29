@@ -1,0 +1,62 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% tailwind_css %}
+</head>
+
+<body class="bg-blue-300 h-screen flex items-center">
+        <div class="w-[50vh] h-[70vh] bg-white mx-auto rounded-xl flex flex-col justify-between hover:scale-105 duration-300 shadow-lg hover:shadow-2xl shadow-black">
+            
+
+            <div>
+                <div class="flex items-center justify-center h-[12vh] border-b-2 border-gray-200">
+                    <h1 class="text-blue-300 text-[5vh] font-bold">Log In</h1>
+                </div>
+        
+                <div class="mt-[5vh]">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="px-[6vh]">
+                            <h1 class="mb-2 text-blue-300 font-semibold text-2xl">Employee ID</h1>
+                            <input type="text" required name="username" class="border-2 hover:scale-105 duration-300 pl-2 shadow-md shadow-black outline-none h-[4vh] w-full mb-[1vh] border-blue-300 rounded-lg" placeholder="Employee ID">
+                            <h1 class="mb-2 text-blue-300 font-semibold text-2xl">Password</h1>
+                            <input type="password" required name="password" class="border-2 pl-2 hover:scale-105 duration-300 shadow-md shadow-black outline-none h-[4vh] w-full mb-[1vh] border-blue-300 rounded-lg" placeholder="Password">
+                        </div>
+                        <div class="px-[6vh] flex justify-end">
+                            <p class="text-blue-300 font-semibold">Can't login? Ask Administrator</p>
+                        </div>
+                        <div class="px-[6vh] flex justify-end mt-2">
+                            <button type="submit" class="flex justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[12vh] h-[4vh] rounded-lg">Login</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="pt-[3vh]">
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                                <h1 class="flex items-center bg-red-400 text-lg text-white font-semibold h-[5vh] px-2 mx-2 rounded">
+                                    {{ message }}
+                                </h1>
+                            {% endif %}
+
+                            {% if message.tags == 'success' %}
+                                <h1 class="flex items-center bg-green-400 text-lg text-white font-semibold h-[5vh] px-2 mx-2 rounded">
+                                    {{ message }}
+                                </h1>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="flex justify-center mb-[2vh]">
+                <h1 class="font-semibold text-blue-300">Copyright &copy; 2024 NetCat_ | All rights reserved</h1>
+            </div>
+        </div>
+</body>
+
+</html>

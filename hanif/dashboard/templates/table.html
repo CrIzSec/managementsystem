@@ -1,0 +1,56 @@
+<div class="overflow-hidden h-full flex flex-col justify-between">
+    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead>
+        <tr>
+            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Created</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Produt Name</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Price</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Stock</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Action</th>
+        </tr>
+        </thead>
+            <tbody>
+                {% for product in page_list %}
+                    <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 dark:odd:bg-gray-800 dark:even:bg-gray-700 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-800 dark:text-gray-200">{{ product.created_at }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800 dark:text-gray-200">{{ product.item_name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800 dark:text-gray-200">Rp.{{ product.price }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800 dark:text-gray-200">{{ product.stock }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-end text-white text-sm font-medium">
+                            <a hx-get="{% url 'tablelist' product.id %}" hx-target="#dialog" @click="open = true" type="button" class="inline-flex cursor-pointer items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Edit</a> / 
+                            <a href="{% url 'delete_tablelist' product.id %}" type="button" class="inline-flex cursor-pointer items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+    <!-- Table Navigation -->
+    <div class="px-4 flex justify-center mb-2 items-center flex-col gap-2  w-full">
+        <p class="text-green-600 text-xl">Table: {{ page_list.number }} / {{ page_list.paginator.num_pages }}</p>
+        <nav aria-label="Page navigation">
+            <ul class="inline-flex">
+                {% if page_list.has_previous %}
+                    <li><a hx-get="{% url 'table' page_list.previous_page_number %}?table={{ page_list.previous_page_number }}" hx-target="#data-table" class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-green-600 rounded-l-lg focus:shadow-outline hover:bg-green-100">Prev</a></li>
+                {% else %}
+                    <li><span class="px-4 py-2 text-gray-400 border border-green-600 rounded-l-lg cursor-not-allowed">Prev</span></li>
+                {% endif %}
+            
+                {% if page_list.has_next %}
+                    <li><a hx-get="{% url 'table' page_list.next_page_number %}?table={{ page_list.next_page_number }}" hx-target="#data-table" class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-green-600 rounded-r-lg focus:shadow-outline hover:bg-green-100">Next</a></li>
+                {% else %}
+                    <li><span class="px-4 py-2 text-gray-400 border border-green-600 rounded-r-lg cursor-not-allowed">Next</span></li>    
+                {% endif %}
+            </ul>
+            
+        </nav>
+    </div>
+    <!-- Modal Content -->
+    <template x-teleport="body">
+        <div x-show="open" class="fixed flex justify-center items-center left-0 top-0 bottom-0 right-0 z-10 bg-black/50">
+            <!-- modal content -->
+            <div @click.outside="open = false" x-transition.delay.100ms x-show="open" id="dialog" class="p-4">
+                    
+            </div>
+        </div>
+    </template>
+</div>

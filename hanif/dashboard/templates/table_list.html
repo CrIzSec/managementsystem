@@ -1,0 +1,41 @@
+<div class="bg-white rounded-md">
+    <form method="POST" action="{% url 'tablelist' table_list.id %}">
+        {% csrf_token %}
+        <!-- modal title -->
+        <div class="py-2 px-4 text-lg font-semibold bg-gray-100 rounded-t-md flex justify-between items-center">
+            <h2>Edit Table</h2>
+            <button @click="open = false" class="hover:bg-red-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <table class="p-4 min-w-full divide-y divide-gray-200 dark:divide-gray-700 rounded-xl">
+            <thead class="bg-gray-200 rounded-xl">
+            <tr class="rounded-xl">
+                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Created</th>
+                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Produt Name</th>
+                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Price</th>
+                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Stock</th>
+            </tr>
+            </thead>
+                <tbody>
+                    <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 dark:odd:bg-gray-800 dark:even:bg-gray-700 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4 whitespace-nowrap bg-transparent text-center text-sm font-medium text-gray-200">{{ table_list.created_at }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap bg-transparent text-center text-sm text-gray-200" contenteditable="true">{{ form.item_name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap bg-transparent text-center text-sm text-gray-200" contenteditable="true">{{ form.price }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap bg-transparent text-center text-sm text-gray-200" contenteditable="true">{{ form.stock }}</td>
+                    </tr>
+                </tbody>
+        </table>
+        <!-- Modal Footer -->
+        <div class="flex justify-end py-2 px-4 text-lg font-semibold bg-gray-100 rounded-b-md">
+            <button type="submit" @click="open = false" 
+                class="inline-flex items-center py-1 px-3 bg-emerald-600 hover:bg-opacity-85 text-white rounded-md mr-2 shadow">Update</button>
+            <a @click="open = false" href="{% url 'delete_tablelist' table_list.id %}"
+                class="inline-flex items-center py-1 px-3 bg-red-500 hover:bg-red-600 text-white rounded-md shadow">Delete</a>
+        </div>
+    </form>
+</div>

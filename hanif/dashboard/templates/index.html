@@ -1,0 +1,158 @@
+{% load static tailwind_tags %}
+{% if user.is_authenticated %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.7/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+    {% tailwind_css %}
+    <title>Hanif Beauty</title>
+</head>
+
+<body class="bg-blue-200 transition-all">
+    <div class="flex" x-data="{isOpen: false}">
+        <div :class="{ 'w-72': isOpen, 'w-20': !isOpen }"
+            class="w-72 duration-500 h-screen bg-blue-800 flex flex-col justify-between relative">
+            <div class="">
+                <a @click="isOpen = !isOpen"
+                    class="absolute cursor-pointer bg-white -right-5 top-20 w-10 border-4 border-blue-800 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="text-blue-800 w-8 h-8 rotate-180 duration-500"
+                        :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </a>
+
+                <div class="flex justify-center">
+                    <h1
+                        class="text-5xl text-blue-500 font-bold bg-blue-200 mt-2 w-[50px] h-[50px] rounded-lg p-8 flex justify-center items-center">
+                        H</h1>
+                </div>
+                <div :class="{'scale-100': isOpen, ' scale-0': !isOpen}"
+                    class="mt-2 font-bold text-3xl text-white transition-transform whitespace-nowrap duration-500">
+                    <h1 class="text-center">Hanif Beauty</h1>
+                </div>
+
+                <div class="">
+                    <a href="{% url 'dashboard' %}">
+                        <ul :class="{'bg-blue-400 mx-2 rounded-lg': isOpen, '': !isOpen}"
+                            class="p-2 flex duration-500 items-center mt-8 hover:bg-blue-500">
+                            <li class="gap-x-4 whitespace-nowrap">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-16 rounded-lg h-16 bg-blue-400">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 0 1-.657.643 48.39 48.39 0 0 1-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 0 1-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 0 0-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 0 1-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 0 0 .657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 0 1-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 0 0 5.427-.63 48.05 48.05 0 0 0 .582-4.717.532.532 0 0 0-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 0 0 .658-.663 48.422 48.422 0 0 0-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 0 1-.61-.58v0Z" />
+                                </svg>
+                            </li>
+                            <h1 class="truncate text-center text-white text-2xl ml-2 font-bold whitespace-nowrap">Dashboard
+                            </h1>
+                        </ul>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="{% url 'product' %}">
+                        <ul :class="{'bg-blue-400 mx-2 rounded-lg': isOpen, '': !isOpen}"
+                            class="p-2 flex duration-500 items-center mt-2 hover:bg-blue-500">
+                            <li class="gap-x-4 whitespace-nowrap">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-16 rounded-lg h-16 bg-blue-400">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                </svg>
+                            </li>
+                            <h1 class="truncate text-center text-white text-2xl ml-2 font-bold whitespace-nowrap">Product
+                            </h1>
+                        </ul>
+                    </a>
+                </div>
+
+                <div class="">
+                    <a href="{% url 'tablelist' %}">
+                        <ul :class="{'bg-blue-400 mx-2 rounded-lg': isOpen, '': !isOpen}"
+                            class="p-2 flex duration-500 items-center mt-2 hover:bg-blue-500">
+                            <li class="gap-x-4 whitespace-nowrap">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-16 rounded-lg h-16 bg-blue-400">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                                </svg>
+                            </li>
+                            <h1 class="truncate text-center text-white text-2xl ml-2 font-bold whitespace-nowrap">Table List
+                            </h1>
+                        </ul>
+                    </a>
+                </div>
+
+                <div class="">
+                    <a href="{% url 'notification' %}">
+                        <ul :class="{'bg-blue-400 mx-2 rounded-lg': isOpen, '': !isOpen}"
+                            class="p-2 flex duration-500 items-center mt-2 hover:bg-blue-500">
+                            <li class="gap-x-4 whitespace-nowrap">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-16 rounded-lg h-16 bg-blue-400">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
+                                </svg>
+                            </li>
+                            <h1 class="truncate text-center text-white text-2xl ml-2 font-bold whitespace-nowrap">
+                                Notifications
+                            </h1>
+                        </ul>
+                    </a>
+                </div>
+
+                <div class="">
+                    <a href="{% url 'message' %}">
+                        <ul :class="{'bg-blue-400 mx-2 rounded-lg': isOpen, '': !isOpen}"
+                            class="p-2 flex duration-500 items-center mt-2 hover:bg-blue-500">
+                            <li class="gap-x-4 whitespace-nowrap">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-16 rounded-lg h-16 bg-blue-400">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                                </svg>
+                            </li>
+                            <h1 class="truncate text-center text-white text-2xl ml-2 font-bold whitespace-nowrap">Message</h1>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="">
+                <a  href="{% url 'logout' %}">
+                    <ul :class="{'bg-blue-400 mx-2 rounded-lg': isOpen, '': !isOpen}"
+                        class="p-2 flex duration-500 items-center mt-2 hover:bg-blue-500 mb-2">
+                        <li class="gap-x-4 whitespace-nowrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-16 rounded-lg h-16 bg-blue-400">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                            </svg>
+                        </li>
+                        <h1 class="truncate text-center text-white text-2xl ml-2 font-bold whitespace-nowrap">Log Out
+                        </h1>
+                    </ul>
+                </a>
+            </div>
+        </div>
+
+        <div class="font-semibold p-4 h-screen flex-1 justify-center overflow-y-scroll">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+
+</html>
+{% else %}
+    <!-- Jika pengguna tidak terotentikasi, redirect ke halaman login -->
+    <script>
+        window.location.href = "{% url 'login' %}";
+    </script>
+{% endif %}

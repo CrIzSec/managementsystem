@@ -1,0 +1,179 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!-- dashboard percentage -->
+    <div class="flex flex-col justify-center gap-4">
+        <div class="bg-white w-full h-[250px] bg-blue-800 rounded-md">
+            <div class="pl-4 pt-4">
+                <h1 class="text-2xl font-bold">DASHBOARD</h1>
+            </div>
+            <div class="flex w-full h-full justify-between gap-4 rounded-lg px-8 py-3">
+                <div class="rounded shadow-lg shadow-black bg-green-500 flex items-center justify-center text-2xl w-[400px] h-[160px]">
+                    <div class="flex justify-center items-center h-full w-[250px] bg-green-300 rounded-l">
+                        50%
+                    </div>
+                    <div class="flex justify-center items-center w-full">
+                        <h1>SOLD</h1>
+                    </div>
+                </div>
+                <div class="rounded shadow-lg shadow-black bg-blue-500 flex items-center justify-center text-2xl w-[400px] h-[160px]">
+                    <div class="flex justify-center items-center h-full w-[250px] bg-blue-300 rounded-l">
+                        73%
+                    </div>
+                    <div class="flex justify-center items-center w-full">
+                        <h1>SUCCESS</h1>
+                    </div>
+                </div>
+                <div class="rounded shadow-lg shadow-black bg-red-500 flex text-2xl w-[400px] h-[160px]">
+                    <div class="flex justify-center items-center h-full w-[250px] bg-red-300 rounded-l">
+                        88%
+                    </div>
+                    <div class="flex justify-center items-center w-full">
+                        <h1>RETURNED</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Menu -->
+        <div x-data="{addtable:false}" class="flex items-center justify-center rounded-lg w-full h-[8vh]">
+            <!-- admin Menu -->
+            <div class="flex gap-12 bg-white shadow-md hover:shadow-lg hover:shadow-black hover:scale-105 duration-300 shadow-black h-[8vh] items-center rounded-lg px-16">
+                <a hx-get="{% url 'add_tablelist' %}" hx-target="#addtable" @click="addtable = true" class="flex hover:cursor-pointer justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[12vh] h-[4vh] rounded-lg">Add Table</a>
+                <a href="{% url 'dashboard' %}" class="flex justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[14vh] h-[4vh] rounded-lg">Add Category</a>
+                <a href="{% url 'dashboard' %}" class="flex justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[16vh] h-[4vh] rounded-lg">View Employee</a>
+                <a href="{% url 'dashboard' %}" class="flex justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[13vh] h-[4vh] rounded-lg">View Absen</a>
+                <a href="{% url 'dashboard' %}" class="flex justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[14vh] h-[4vh] rounded-lg">Server Logs</a>
+                <a href="{% url 'dashboard' %}" class="flex justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[16vh] h-[4vh] rounded-lg">Backup Server</a>
+                <a href="{% url 'dashboard' %}" class="flex justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[18vh] h-[4vh] rounded-lg">Server Monitoring</a>
+                <a href="{% url 'dashboard' %}" class="flex justify-center shadow-md hover:scale-105 duration-300 shadow-black text-white font-semibold items-center bg-green-400 hover:bg-green-600 w-[12vh] h-[4vh] rounded-lg">Add Events</a>
+            </div>
+
+            <!-- Add Table -->
+            <template x-teleport="body">
+                <div x-show="addtable" class="fixed flex justify-center items-center left-0 top-0 bottom-0 right-0 z-10 bg-black/50">
+                    <div @click.outside="addtable = false" x-transition.delay.100ms x-show="addtable" id="addtable" class="p-4">
+
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- dashboard tables and charts -->
+        <div class="flex gap-4 w-full h-[60vh] rounded-md">
+            <!-- Data Tables -->
+            <div class="w-full h-full bg-white rounded-lg">
+                <div class="flex flex-col h-full">
+                    <div class="-m-1.5 overflow-x-auto h-full">
+                      <div class="p-1.5 min-w-full inline-block align-middle h-full">
+                        <div id="data-table" x-data="{open:false}" class="overflow-hidden h-full flex flex-col justify-between">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Created</th>
+                                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Produt Name</th>
+                                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Price</th>
+                                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Stock</th>
+                                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-800 font-bold uppercase">Action</th>
+                                </tr>
+                                </thead>
+                                {% if table %}
+                                    <tbody>
+                                        {% for product in table.object_list %}
+                                            <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 dark:odd:bg-gray-800 dark:even:bg-gray-700 dark:hover:bg-gray-700">
+                                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-800 dark:text-gray-200">{{ product.created_at }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800 dark:text-gray-200">{{ product.item_name }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800 dark:text-gray-200">Rp.{{ product.price }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800 dark:text-gray-200">{{ product.stock }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-center text-end text-white text-sm font-medium">
+                                                    <a hx-get="{% url 'tablelist' product.id %}" hx-target="#dialog" @click="open = true" type="button" class="inline-flex cursor-pointer items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Edit</a> / 
+                                                    <a href="{% url 'delete_tablelist' product.id %}" type="button" class="inline-flex cursor-pointer items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Delete</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                {% endif %}
+                            </table>
+
+                            <!-- Modal Content -->
+                            <template x-teleport="body">
+                                <div x-show="open" class="fixed flex justify-center items-center left-0 top-0 bottom-0 right-0 z-10 bg-black/50">
+                                    <!-- modal content -->
+                                    <div @click.outside="open = false" x-transition.delay.100ms x-show="open" id="dialog" class="p-4">
+                                            
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Table Navigation -->
+                            <div class="px-4 flex justify-center mb-2 items-center flex-col gap-2">
+                                <p class="text-green-600 text-xl">Table: {{ table.number }} / {{ table.paginator.num_pages }}</p>
+                                <nav aria-label="Page navigation  w-full">
+                                    <ul class="inline-flex w-full">
+                                        {% if table.has_previous %}
+                                            <li><a hx-get="{% url 'table' table.previous_page_number %}?table={{ table.previous_page_number }}" hx-target="#data-table" class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-r-0 border-green-600 rounded-l-lg focus:shadow-outline hover:bg-green-100">Prev</a></li>
+                                        {% else %}
+                                            <li><span class="px-4 py-2 text-gray-400 cursor-not-allowed">Prev</span></li>
+                                        {% endif %}
+                                        
+                                        {% if table.has_next %}
+                                            <li><a hx-get="{% url 'table' table.next_page_number %}?table={{ table.next_page_number }}" hx-target="#data-table" class="px-4 py-2 text-green-600 transition-colors duration-150 bg-white border border-green-600 rounded-r-lg focus:shadow-outline hover:bg-green-100">Next</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+            <!-- Data Charts -->
+            <div class="w-full h-full bg-white rounded-md">
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <!-- Canvas element untuk grafik -->
+                <div class="w-full h-full"><canvas id="myChart"></canvas></div>
+
+                <script>
+                    // Mendapatkan referensi ke elemen canvas
+                    var ctx = document.getElementById('myChart').getContext('2d');
+
+                    // Konfigurasi grafik
+                    var myChart = new Chart(ctx, {
+                        type: 'bar', // Tipe grafik
+                        data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: '# of Stocks',
+                                data: [12, 2, 3, 5, 19, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            scales: {
+                                
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+{% endblock %}
